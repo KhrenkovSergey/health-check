@@ -1,0 +1,27 @@
+version: 1.0.{build}
+
+image: Visual Studio 2019
+
+environment:
+  matrix:
+    - NODE_VERSION: "14"
+
+branches:
+  only:
+    - master  # ветка git
+    - main
+
+cache: node_modules  # кеширование
+
+install:
+  - npm install
+
+build_script:
+  - npm test -- --coverage
+
+artifacts:
+  - path: coverage/lcov-report/index.html
+    name: coverage-report
+
+test_script:
+  - npm run lint && npm test  # скрипт тестирования
